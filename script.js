@@ -3,6 +3,7 @@ const dropzones = document.querySelectorAll('.dropzone');
 const errorSound = document.getElementById('errorSound');
 let pattern = [];
 let firstColorChosen = null;
+let placedItems = new Array(6).fill(null);
 
 // Oyuncu istediği renkten başlamalı
 function determinePattern(startColor) {
@@ -15,6 +16,8 @@ function determinePattern(startColor) {
 draggables.forEach(draggable => {
     draggable.addEventListener('dragstart', (e) => {
         e.dataTransfer.setData('color', e.target.getAttribute('data-color'));
+        e.dataTransfer.setData('id', e.target.dataset.color + Math.random());
+
         if (!firstColorChosen) {
             firstColorChosen = e.target.getAttribute('data-color');
             determinePattern(firstColorChosen);
@@ -22,7 +25,7 @@ draggables.forEach(draggable => {
     });
 });
 
-dropzones.forEach(dropzone => {
+dropzones.forEach((dropzone, index) => {
     dropzone.addEventListener('dragover', (e) => {
         e.preventDefault();
     });
@@ -30,11 +33,13 @@ dropzones.forEach(dropzone => {
     dropzone.addEventListener('drop', (e) => {
         e.preventDefault();
         const color = e.dataTransfer.getData('color');
-        const index = parseInt(dropzone.getAttribute('data-index'));
+
+        if (placedItems[index]) return; // Eğer alan doluysa işlem yapma
 
         if (color === pattern[index]) {
             dropzone.style.backgroundColor = color;
             dropzone.classList.add('correct');
+            placedItems[index] = color;
             checkCompletion();
         } else {
             dropzone.classList.add('incorrect');
@@ -45,7 +50,7 @@ dropzones.forEach(dropzone => {
 });
 
 function checkCompletion() {
-    if ([...dropzones].every((zone, i) => zone.style.backgroundColor === pattern[i])) {
+    if (placedItems.every((color, i) => color === pattern[i])) {
         setTimeout(() => alert("Tebrikler! Örüntüyü doğru yerleştirdiniz."), 500);
     }
 }
