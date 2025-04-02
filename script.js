@@ -1,11 +1,25 @@
 const draggables = document.querySelectorAll('.draggable');
 const dropzones = document.querySelectorAll('.dropzone');
 const errorSound = document.getElementById('errorSound');
+const startGreenButton = document.getElementById('startGreen');
+const startOrangeButton = document.getElementById('startOrange');
+
 let pattern = [];
 let firstColorChosen = null;
 let placedItems = new Array(6).fill(null);
 
-// Oyuncu istediği renkten başlamalı
+// Oyuncu bir renk seçmeden oyun başlamasın
+function resetGame() {
+    pattern = [];
+    firstColorChosen = null;
+    placedItems.fill(null);
+    dropzones.forEach(dropzone => {
+        dropzone.style.backgroundColor = "#f9f9f9";
+        dropzone.classList.remove("correct", "incorrect");
+    });
+}
+
+// Oyuncu bir renkle başlasın ve örüntü o sırayla devam etsin
 function determinePattern(startColor) {
     pattern = [];
     for (let i = 0; i < 6; i++) {
@@ -13,15 +27,26 @@ function determinePattern(startColor) {
     }
 }
 
+startGreenButton.addEventListener("click", () => {
+    resetGame();
+    firstColorChosen = "green";
+    determinePattern(firstColorChosen);
+});
+
+startOrangeButton.addEventListener("click", () => {
+    resetGame();
+    firstColorChosen = "orange";
+    determinePattern(firstColorChosen);
+});
+
 draggables.forEach(draggable => {
     draggable.addEventListener('dragstart', (e) => {
-        e.dataTransfer.setData('color', e.target.getAttribute('data-color'));
-        e.dataTransfer.setData('id', e.target.dataset.color + Math.random());
-
         if (!firstColorChosen) {
-            firstColorChosen = e.target.getAttribute('data-color');
-            determinePattern(firstColorChosen);
+            alert("Önce bir renkle başlamalısınız!");
+            e.preventDefault();
+            return;
         }
+        e.dataTransfer.setData('color', e.target.getAttribute('data-color'));
     });
 });
 
