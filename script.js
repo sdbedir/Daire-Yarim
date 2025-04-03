@@ -1,9 +1,10 @@
-// script.js
+/* script.js */
 
 document.addEventListener("DOMContentLoaded", () => {
     const shapes = document.querySelectorAll(".shape");
     const dropzone = document.getElementById("dropzone");
     const successMessage = document.getElementById("successMessage");
+    const resetButton = document.getElementById("resetButton");
 
     shapes.forEach(shape => {
         shape.addEventListener("dragstart", dragStart);
@@ -56,16 +57,19 @@ document.addEventListener("DOMContentLoaded", () => {
     function checkWin() {
         const children = dropzone.children;
         if (children.length === 2) {
-            const [first, second] = children;
-            const firstRect = first.getBoundingClientRect();
-            const secondRect = second.getBoundingClientRect();
-
-            if (Math.abs(firstRect.top - secondRect.top) === 100 && Math.abs(firstRect.left - secondRect.left) === 0) {
-                successMessage.style.display = "block";
-                setTimeout(() => {
-                    successMessage.scrollIntoView({ behavior: "smooth", block: "center" });
-                }, 0);
-            }
+            successMessage.style.display = "block";
+            resetButton.style.display = "block";
+            setTimeout(() => {
+                successMessage.scrollIntoView({ behavior: "smooth", block: "center" });
+            }, 0);
         }
     }
+
+    resetButton.addEventListener("click", () => {
+        dropzone.innerHTML = "";
+        successMessage.style.display = "none";
+        resetButton.style.display = "none";
+        document.querySelector(".shapes-container").appendChild(document.getElementById("shape1"));
+        document.querySelector(".shapes-container").appendChild(document.getElementById("shape2"));
+    });
 });
