@@ -19,11 +19,11 @@ document.addEventListener("DOMContentLoaded", () => {
 
     function dragStart(e) {
         e.dataTransfer.setData("text/plain", e.target.id);
-        setTimeout(() => e.target.classList.add("hidden"), 0);
+        setTimeout(() => e.target.style.opacity = "0.5", 0);
     }
 
     function dragEnd(e) {
-        e.target.classList.remove("hidden");
+        e.target.style.opacity = "1";
     }
 
     function dragOver(e) {
@@ -65,6 +65,10 @@ document.addEventListener("DOMContentLoaded", () => {
         dropzone.innerHTML = "";
         successMessage.style.display = "none";
         resetButton.style.display = "none";
-        shapes.forEach(shape => shapesContainer.appendChild(shape));
+        shapes.forEach(shape => {
+            shape.style.position = "static";
+            shape.style.opacity = "1";
+            shapesContainer.appendChild(shape);
+        });
     });
 });
