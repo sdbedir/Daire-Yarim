@@ -48,7 +48,6 @@ h1 {
     cursor: grab;
     position: relative;
     border-radius: 100px 100px 0 0;
-    background-color: #E91E63;
     transition: transform 0.2s ease;
 }
 
