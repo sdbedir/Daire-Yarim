@@ -11,6 +11,7 @@ document.addEventListener("DOMContentLoaded", () => {
             shape.style.left = "0px";
             shape.style.top = "0px";
             shape.classList.remove("hidden");
+            shape.setAttribute("draggable", "true");  // draggable'ı tekrar etkinleştir
         });
         dropzone.innerHTML = ""; // Dropzone'u sıfırlıyoruz
         successMessage.style.display = "none";
