@@ -5,6 +5,7 @@ document.addEventListener("DOMContentLoaded", () => {
     const dropzone = document.getElementById("dropzone");
     const successMessage = document.getElementById("successMessage");
     const resetButton = document.getElementById("resetButton");
+    const shapesContainer = document.querySelector(".shapes-container");
 
     shapes.forEach(shape => {
         shape.addEventListener("dragstart", dragStart);
@@ -43,25 +44,20 @@ document.addEventListener("DOMContentLoaded", () => {
         dropzone.style.backgroundColor = "#fce4ec";
         const id = e.dataTransfer.getData("text/plain");
         const draggable = document.getElementById(id);
-
+        
         if (!dropzone.contains(draggable)) {
             dropzone.appendChild(draggable);
             draggable.style.position = "absolute";
-            draggable.style.top = `${dropzone.children.length === 1 ? 0 : 100}px`;
+            draggable.style.top = `${dropzone.children.length === 1 ? 0 : 75}px`;
             draggable.style.left = "0";
         }
-
         checkWin();
     }
 
     function checkWin() {
-        const children = dropzone.children;
-        if (children.length === 2) {
+        if (dropzone.children.length === 2) {
             successMessage.style.display = "block";
             resetButton.style.display = "block";
-            setTimeout(() => {
-                successMessage.scrollIntoView({ behavior: "smooth", block: "center" });
-            }, 0);
         }
     }
 
@@ -69,7 +65,7 @@ document.addEventListener("DOMContentLoaded", () => {
         dropzone.innerHTML = "";
         successMessage.style.display = "none";
         resetButton.style.display = "none";
-        document.querySelector(".shapes-container").appendChild(document.getElementById("shape1"));
-        document.querySelector(".shapes-container").appendChild(document.getElementById("shape2"));
+        shapesContainer.appendChild(document.getElementById("shape1"));
+        shapesContainer.appendChild(document.getElementById("shape2"));
     });
 });
