@@ -16,7 +16,7 @@ document.addEventListener("DOMContentLoaded", () => {
     dropzone.addEventListener("drop", drop);
 
     function dragStart(e) {
-        e.dataTransfer.setData("text/plain", e.target.id);
+        e.dataTransfer.setData("text", e.target.id);
         setTimeout(() => e.target.classList.add("hidden"), 0);
     }
 
@@ -40,9 +40,9 @@ document.addEventListener("DOMContentLoaded", () => {
     function drop(e) {
         e.preventDefault();
         dropzone.style.backgroundColor = "#fce4ec";
-        const id = e.dataTransfer.getData("text/plain");
+        const id = e.dataTransfer.getData("text");
         const draggable = document.getElementById(id);
-        
+
         if (!dropzone.contains(draggable)) {
             dropzone.appendChild(draggable);
             draggable.style.position = "absolute";
