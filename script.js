@@ -5,43 +5,33 @@ document.addEventListener("DOMContentLoaded", () => {
     const resetButton = document.getElementById("resetButton");
     const shapesContainer = document.querySelector(".shapes-container");
 
-    // Başlangıçta dairelerin doğru şekilde görünmesini sağlıyoruz.
-    function resetShapes() {
-        shapes.forEach((shape) => {
-            shape.style.left = "0px";
-            shape.style.top = "0px";
-            shape.classList.remove("hidden");
-            shape.setAttribute("draggable", "true");  // draggable'ı tekrar etkinleştir
-        });
-        dropzone.innerHTML = ""; // Dropzone'u sıfırlıyoruz
-        successMessage.style.display = "none";
-        resetButton.style.display = "none";
-    }
+    let initialPositions = {}; // Yarım dairelerin başlangıç pozisyonlarını saklamak için
 
-    // Drag başlangıcı
-    shapes.forEach((shape) => {
+    shapes.forEach(shape => {
         shape.addEventListener("dragstart", dragStart);
         shape.addEventListener("dragend", dragEnd);
+
+        // Başlangıç pozisyonlarını kaydet
+        initialPositions[shape.id] = {
+            top: shape.style.top,
+            left: shape.style.left
+        };
     });
 
-    // Dropzone işlemleri
     dropzone.addEventListener("dragover", dragOver);
     dropzone.addEventListener("dragenter", dragEnter);
     dropzone.addEventListener("dragleave", dragLeave);
     dropzone.addEventListener("drop", drop);
 
-    // Sürükle başlangıcı
     function dragStart(e) {
-        e.dataTransfer.setData("text/plain", e.target.id);
+        e.dataTransfer.setData("text", e.target.id);
         setTimeout(() => e.target.classList.add("hidden"), 0);
     }
 
-    // Sürükle bitişi
     function dragEnd(e) {
         e.target.classList.remove("hidden");
     }
 
-    // Dropzone'u aktifleştiriyoruz
     function dragOver(e) {
         e.preventDefault();
     }
@@ -58,10 +48,9 @@ document.addEventListener("DOMContentLoaded", () => {
     function drop(e) {
         e.preventDefault();
         dropzone.style.backgroundColor = "#fce4ec";
-        const id = e.dataTransfer.getData("text/plain");
+        const id = e.dataTransfer.getData("text");
         const draggable = document.getElementById(id);
 
-        // Daireyi yerleştiriyoruz
         if (!dropzone.contains(draggable)) {
             dropzone.appendChild(draggable);
             draggable.style.position = "absolute";
@@ -71,7 +60,6 @@ document.addEventListener("DOMContentLoaded", () => {
         checkWin();
     }
 
-    // Kazanma kontrolü
     function checkWin() {
         if (dropzone.children.length === 2) {
             successMessage.style.display = "block";
@@ -79,11 +67,16 @@ document.addEventListener("DOMContentLoaded", () => {
         }
     }
 
-    // Tekrar oyna butonuna tıklandığında
     resetButton.addEventListener("click", () => {
-        resetShapes();
-        shapes.forEach(shape => shapesContainer.appendChild(shape)); // Şekilleri tekrar başlat
+        dropzone.innerHTML = "";
+        successMessage.style.display = "none";
+        resetButton.style.display = "none";
+        
+        // Şekilleri başlangıç pozisyonlarına geri getir
+        shapes.forEach(shape => {
+            shape.style.top = initialPositions[shape.id].top;
+            shape.style.left = initialPositions[shape.id].left;
+            shapesContainer.appendChild(shape);
+        });
     });
-
-    resetShapes(); // Sayfa ilk açıldığında da dairelerin sıfırlanmasını sağlıyoruz.
 });
