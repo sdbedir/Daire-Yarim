@@ -65,7 +65,6 @@ document.addEventListener("DOMContentLoaded", () => {
         dropzone.innerHTML = "";
         successMessage.style.display = "none";
         resetButton.style.display = "none";
-        shapesContainer.appendChild(document.getElementById("shape1"));
-        shapesContainer.appendChild(document.getElementById("shape2"));
+        shapes.forEach(shape => shapesContainer.appendChild(shape));
     });
 });
