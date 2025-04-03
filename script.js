@@ -5,9 +5,17 @@ document.addEventListener("DOMContentLoaded", () => {
     const resetButton = document.getElementById("resetButton");
     const shapesContainer = document.querySelector(".shapes-container");
 
+    let initialPositions = {}; // Yarım dairelerin başlangıç pozisyonlarını saklamak için
+
     shapes.forEach(shape => {
         shape.addEventListener("dragstart", dragStart);
         shape.addEventListener("dragend", dragEnd);
+
+        // Başlangıç pozisyonlarını kaydet
+        initialPositions[shape.id] = {
+            top: shape.style.top,
+            left: shape.style.left
+        };
     });
 
     dropzone.addEventListener("dragover", dragOver);
@@ -63,6 +71,12 @@ document.addEventListener("DOMContentLoaded", () => {
         dropzone.innerHTML = "";
         successMessage.style.display = "none";
         resetButton.style.display = "none";
-        shapes.forEach(shape => shapesContainer.appendChild(shape));
+        
+        // Şekilleri başlangıç pozisyonlarına geri getir
+        shapes.forEach(shape => {
+            shape.style.top = initialPositions[shape.id].top;
+            shape.style.left = initialPositions[shape.id].left;
+            shapesContainer.appendChild(shape);
+        });
     });
 });
