@@ -11,6 +11,7 @@ body {
     height: 100vh;
     flex-direction: column;
     gap: 20px;
+    overflow: hidden;
 }
 
 h1 {
@@ -27,7 +28,7 @@ h1 {
     height: auto;
     align-items: center;
     justify-content: center;
-    gap: 10px;
+    gap: 5px;
     flex-direction: column;
 }
 
@@ -41,6 +42,7 @@ h1 {
     justify-content: center;
     position: relative;
     border-radius: 50%;
+    overflow: hidden;
 }
 
 .shape {
