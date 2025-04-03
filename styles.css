@@ -43,14 +43,15 @@ h1 {
 .shape {
     width: 150px;
     height: 75px;
-    background-color: #E91E63;
+    background-color: transparent; /* Arkadaki beyaz alanı yok ettik */
     cursor: grab;
     position: relative;
     border-radius: 100px 100px 0 0;
+    background-color: #E91E63;
 }
 
 .shape.bottom {
-    transform: rotate(180deg); /* Alttaki yarım dairenin doğru şekilde yerleştirilmesini sağlıyoruz */
+    transform: rotate(180deg); /* Alttaki yarım daireyi ters yapıyoruz */
 }
 
 .hidden {
