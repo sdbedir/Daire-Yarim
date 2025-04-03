@@ -1,3 +1,80 @@
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #f9f9f9;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    flex-direction: column;
+    gap: 20px;
+}
+
+h1 {
+    position: absolute;
+    top: 10px;
+    width: 100%;
+    text-align: center;
+    color: #E91E63;
+}
+
+.game-container {
+    display: flex;
+    width: 100%;
+    height: auto;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    flex-direction: column;
+}
+
+.dropzone {
+    width: 150px;
+    height: 150px;
+    border: 2px dashed #E91E63;
+    background-color: #fce4ec;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    border-radius: 50%;
+}
+
+.shape {
+    width: 150px;
+    height: 75px;
+    background-color: #E91E63;
+    cursor: grab;
+    position: relative;
+    border-radius: 100px 100px 0 0;
+    background-color: #E91E63;
+    transition: transform 0.2s ease;
+}
+
+.shape.bottom {
+    transform: rotate(180deg); /* Alt yarım daireyi ters çevir */
+}
+
+.hidden {
+    opacity: 0;
+}
+
+.message {
+    display: none;
+    color: #E91E63;
+    font-size: 24px;
+    font-weight: bold;
+    margin-top: 20px;
+}
+
+.shapes-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 5px;
+}
+
 #resetButton {
     display: none;
     margin-top: 20px;
