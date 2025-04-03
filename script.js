@@ -1,5 +1,3 @@
-/* script.js */
-
 document.addEventListener("DOMContentLoaded", () => {
     const shapes = document.querySelectorAll(".shape");
     const dropzone = document.getElementById("dropzone");
@@ -19,11 +17,11 @@ document.addEventListener("DOMContentLoaded", () => {
 
     function dragStart(e) {
         e.dataTransfer.setData("text/plain", e.target.id);
-        setTimeout(() => e.target.style.opacity = "0.5", 0);
+        setTimeout(() => e.target.classList.add("hidden"), 0);
     }
 
     function dragEnd(e) {
-        e.target.style.opacity = "1";
+        e.target.classList.remove("hidden");
     }
 
     function dragOver(e) {
@@ -65,10 +63,6 @@ document.addEventListener("DOMContentLoaded", () => {
         dropzone.innerHTML = "";
         successMessage.style.display = "none";
         resetButton.style.display = "none";
-        shapes.forEach(shape => {
-            shape.style.position = "static";
-            shape.style.opacity = "1";
-            shapesContainer.appendChild(shape);
-        });
+        shapes.forEach(shape => shapesContainer.appendChild(shape));
     });
 });
